@@ -1,16 +1,39 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router';
 
 export default function Login() {
+    const [ email , setEmail] = useState('');
+    const  [password , setPassword] = useState("");
+    const navigate = useNavigate();
+
+    const login = (e) => {
+        e.preventDefault();
+        if ( email === 'ahmedahmedtest@gmail.com' ){
+            localStorage.setItem('auth', JSON.stringify({
+                user : "ahmed" ,
+                loggedin : true ,
+                token : "valid"
+            }));
+            navigate("/", { replace: true }) ;
+        }else{
+            alert("invalid mail !")
+        }
+    }
+
     return (
-        <form className="bg-white text-gray-500 max-w-[350px] mx-4 md:p-6 p-4 text-left text-sm rounded-xl shadow-[0px_0px_10px_0px] shadow-black/10">
+        <form className=" text-gray-500 max-w-[350px] mx-4 md:p-6 p-4 text-left text-sm rounded-xl shadow-[0px_0px_10px_0px] shadow-black/10 bg-purple-300/25 ">
             <h2 className="text-2xl font-semibold mb-6 text-center text-gray-800">Login Now</h2>
-            <input id="email" className="w-full border my-3 border-gray-500/30 outline-none rounded-full py-2.5 px-4" type="email" placeholder="Enter your email" required />
-            <input id="password" className="w-full border mt-1 border-gray-500/30 outline-none rounded-full py-2.5 px-4" type="password" placeholder="Enter your password" required />
+            <input id="email" className="w-full border my-3 border-gray-500/30 outline-none rounded-full py-2.5 px-4" type="email" placeholder="Enter your email" required 
+            onChange={ e => setEmail(e.target.value)} value={email}
+            />
+            <input id="password" className="w-full border mt-1 border-gray-500/30 outline-none rounded-full py-2.5 px-4" type="password" placeholder="Enter your password" required 
+            onChange={e => setPassword(e.target.value)} value={ password }
+            />
             <div className="text-right py-4">
                 <a className="text-blue-600 underline" href="#">Forgot Password</a>
             </div>
-            <button type="submit" className="w-full mb-3 bg-indigo-500 hover:bg-indigo-600/90 active:scale-95 transition py-2.5 rounded-full text-white">Log in</button>
-            <p className="text-center mt-4">Don’t have an account? <a href="#" className="text-blue-500 underline">Signup Now</a></p>
+            <button type='button' className="w-full mb-3 bg-indigo-500 hover:bg-indigo-600/90 active:scale-95 transition py-2.5 rounded-full text-white" onClick={ login } >Log in</button>
+            <p className="text-center mt-4">Don’t have an account? <Link to="/register" className="text-blue-500 underline">Signup Now</Link></p>
         </form>
     );
 };

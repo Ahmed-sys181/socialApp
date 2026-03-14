@@ -1,11 +1,12 @@
-import React, { Children } from 'react'
+import React from 'react'
 import { Navigate } from 'react-router';
 
 export default function GuestGuard({ children }) {
 
-  const user = true ;
+  const auth = localStorage.getItem("user") ;
+  const user = JSON.parse(auth);
   if (user){
-    return <Navigate to="/" /> ;
+    return <Navigate to="/" replace /> ;
   }
 
   return children
